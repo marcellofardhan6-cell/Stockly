@@ -9,6 +9,10 @@
 ![PHP](https://img.shields.io/badge/PHP-8.2-777bb4?style=flat-square\&logo=php)
 ![License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)
 
+
+<img width="948" height="539" alt="image" src="https://github.com/user-attachments/assets/32544f41-aae8-476a-8d4e-0109f5ddeb13" />
+
+
 ---
 
 ## ✨ Tentang Stockly
