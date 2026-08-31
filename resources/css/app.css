@@ -1,0 +1,331 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-background: #F8FAFC;
+    --color-surface: #FFFFFF;
+    --color-surface-hover: #F1F5F9;
+    --color-primary: #00875A;
+    --color-primary-hover: #006E49;
+    --color-primary-soft: #E7F5EE;
+    --color-content: #111827;
+    --color-muted: #64748B;
+    --color-subtle: #94A3B8;
+    --color-line: #E2E8F0;
+    --color-line-soft: #F1F5F9;
+    --color-success: #059669;
+    --color-success-soft: #ECFDF5;
+    --color-warning: #D97706;
+    --color-warning-soft: #FEF3C7;
+    --color-danger: #DC2626;
+    --color-danger-soft: #FEF2F2;
+}
+
+@layer components {
+    .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-radius: 0.375rem;
+        padding: 0.625rem 1rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        background-color: var(--color-primary);
+        color: #FFFFFF;
+        transition: all 0.2s ease-out;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--color-primary-hover);
+        transform: scale(1.03);
+    }
+
+    .btn-primary:active {
+        transform: scale(0.98);
+    }
+
+    .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-radius: 0.375rem;
+        padding: 0.625rem 1rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        background-color: var(--color-surface);
+        color: var(--color-content);
+        border: 1px solid var(--color-line);
+        transition: all 0.2s ease-out;
+    }
+
+    .btn-secondary:hover {
+        background-color: var(--color-surface-hover);
+    }
+
+    .btn-secondary:active {
+        transform: scale(0.98);
+    }
+
+    .field-input {
+        width: 100%;
+        border-radius: 0.375rem;
+        border: 1px solid var(--color-line);
+        background-color: var(--color-surface);
+        padding: 0.625rem 0.75rem;
+        font-size: 0.875rem;
+        color: var(--color-content);
+        transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out;
+    }
+
+    .field-input::placeholder {
+        color: var(--color-subtle);
+    }
+
+    .field-input:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px rgb(0 135 90 / 0.12);
+    }
+
+    .field-label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--color-content);
+        margin-bottom: 0.375rem;
+    }
+
+    .panel {
+        border-radius: 0.5rem;
+        border: 1px solid var(--color-line);
+        background-color: var(--color-surface);
+        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    }
+}
+
+@keyframes stockly-enter {
+    from {
+        opacity: 0;
+        transform: translateY(var(--anim-y, 8px)) scale(var(--anim-s, 1));
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes stockly-fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+html.anim [data-anim] {
+    animation: stockly-enter var(--anim-d, 450ms) cubic-bezier(0.22, 0.61, 0.36, 1) var(--anim-delay, 0ms) backwards;
+}
+
+html.anim [data-anim-fade] {
+    animation: stockly-fade var(--anim-d, 450ms) ease-out var(--anim-delay, 0ms) backwards;
+}
+
+html.anim [data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+        opacity 550ms cubic-bezier(0.22, 0.61, 0.36, 1),
+        transform 550ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    transition-delay: var(--anim-delay, 0ms);
+}
+
+html.anim [data-reveal].revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+html.anim #fitur .grid > [data-reveal]:nth-child(2) {
+    transition-delay: 90ms;
+}
+
+html.anim #fitur .grid > [data-reveal]:nth-child(3) {
+    transition-delay: 180ms;
+}
+
+.btn-pop {
+    transition-property: color, background-color, border-color, transform;
+    transition-duration: 200ms;
+    transition-timing-function: ease-out;
+}
+
+.btn-pop:hover {
+    transform: scale(1.03);
+}
+
+.btn-pop:active {
+    transform: scale(0.98);
+}
+
+.card-lift {
+    transition: transform 0.2s ease-out;
+}
+
+.card-lift:hover {
+    transform: translateY(-2px);
+}
+
+.nav-link {
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -4px;
+    height: 1px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease-out;
+}
+
+.nav-link:hover::after {
+    transform: scaleX(1);
+}
+
+/* ====== Splash loading ====== */
+.splash {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    background-color: var(--color-background);
+    transition: opacity 0.4s ease-out, visibility 0.4s ease-out;
+}
+
+.splash.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.splash-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.splash-mark {
+    animation: splash-mark 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+.splash-spinner {
+    width: 2rem;
+    height: 2rem;
+    border: 2px solid rgb(0 135 90 / 0.2);
+    border-top-color: var(--color-primary);
+    border-radius: 9999px;
+    animation: splash-spin 0.8s linear infinite;
+}
+
+.splash-copy {
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--color-muted);
+    opacity: 0;
+    animation: stockly-fade 0.4s ease-out 0.2s forwards;
+}
+
+@keyframes splash-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes splash-mark {
+    from {
+        opacity: 0;
+        transform: scale(0.85);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ====== Interactive hero decorations ====== */
+
+/* slow drifting curve on the right */
+.decor-curve {
+    animation: decor-drift 14s ease-in-out infinite alternate;
+    transform-origin: center;
+}
+
+.decor-package {
+    animation: decor-float 9s ease-in-out infinite alternate;
+}
+
+.decor-node {
+    animation: decor-pulse 3.2s ease-in-out infinite alternate;
+}
+
+@keyframes decor-drift {
+    from {
+        transform: translateY(0) scale(1);
+    }
+
+    to {
+        transform: translateY(-8px) scale(1.02);
+    }
+}
+
+@keyframes decor-float {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(6px);
+    }
+}
+
+@keyframes decor-pulse {
+    from {
+        transform: scale(1);
+        opacity: var(--op, 0.25);
+    }
+
+    to {
+        transform: scale(1.35);
+        opacity: calc(var(--op, 0.25) * 0.6);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .splash-spinner,
+    .splash-mark,
+    .splash-copy,
+    .decor-curve,
+    .decor-package,
+    .decor-node {
+        animation: none;
+        transition: none;
+    }
+}
