@@ -1,103 +1,81 @@
-﻿<x-app-shell title="Dashboard" page="Dashboard" :user="$user" search
+<x-app-shell title="Dashboard" page="Dashboard" :user="$user" search
     :menu="[
         ['key' => 'dashboard', 'label' => 'Dashboard', 'icon' => 'dashboard', 'href' => route('admin.dashboard')],
-        ['key' => 'produk', 'label' => 'Produk', 'icon' => 'box', 'href' => '#'],
-        ['key' => 'kategori', 'label' => 'Kategori', 'icon' => 'tag', 'href' => '#'],
-        ['key' => 'supplier', 'label' => 'Supplier', 'icon' => 'truck', 'href' => '#'],
-        ['key' => 'barang-masuk', 'label' => 'Barang Masuk', 'icon' => 'import', 'href' => '#'],
-        ['key' => 'penjualan', 'label' => 'Penjualan', 'icon' => 'cart', 'href' => '#'],
-        ['key' => 'laporan', 'label' => 'Laporan', 'icon' => 'chart', 'href' => '#'],
-        ['key' => 'user', 'label' => 'User', 'icon' => 'users', 'href' => '#'],
-        ['key' => 'pengaturan', 'label' => 'Pengaturan', 'icon' => 'settings', 'href' => '#'],
+        ['key' => 'produk', 'label' => 'Produk', 'icon' => 'box', 'href' => route('admin.produk.index')],
+        ['key' => 'kategori', 'label' => 'Kategori', 'icon' => 'tag', 'href' => route('admin.kategori.index')],
+        ['key' => 'supplier', 'label' => 'Supplier', 'icon' => 'truck', 'href' => route('admin.supplier.index')],
+        ['key' => 'barang-masuk', 'label' => 'Barang Masuk', 'icon' => 'import', 'href' => route('admin.barang-masuk.index')],
+        ['key' => 'laporan', 'label' => 'Laporan', 'icon' => 'chart', 'href' => route('admin.laporan.index')],
+        ['key' => 'user', 'label' => 'User', 'icon' => 'users', 'href' => route('admin.user.index')],
+        ['key' => 'pengaturan', 'label' => 'Pengaturan', 'icon' => 'settings', 'href' => route('admin.pengaturan.index')],
     ]"
     active="dashboard">
 
     <div class="space-y-6">
         <div data-anim style="--anim-delay: 0ms">
-            <h1 class="text-xl font-semibold tracking-tight lg:text-2xl">Dashboard</h1>
-            <p class="mt-1 text-sm text-gray-500">Ringkasan aktivitas bisnis hari ini.</p>
+            <p class="eyebrow text-sm">Ringkasan bisnis</p>
+            <h1 class="page-title mt-1 text-2xl font-semibold tracking-tight lg:text-3xl">Dashboard</h1>
+            <p class="mt-1.5 text-sm text-muted">Ringkasan aktivitas bisnis hari ini.</p>
         </div>
 
         <div class="grid grid-cols-2 gap-4 xl:grid-cols-4">
             <div data-anim style="--anim-delay: 60ms">
-                <x-stat-card label="Total Produk" value="1.284" note="+32 minggu ini" noteClass="text-emerald-700"/>
+                <x-stat-card label="Total Produk" value="{{ number_format($totalProduk, 0, ',', '.') }}"/>
             </div>
             <div data-anim style="--anim-delay: 140ms">
-                <x-stat-card label="Total Stok" value="8.420"/>
+                <x-stat-card label="Total Stok" value="{{ number_format($totalStok, 0, ',', '.') }}" note="unit" noteClass="text-muted"/>
             </div>
             <div data-anim style="--anim-delay: 220ms">
-                <x-stat-card label="Penjualan Hari Ini" value="Rp12.480.000" note="+4,2% dari kemarin" noteClass="text-emerald-700"/>
+                <x-stat-card label="Penjualan Hari Ini" value="Rp{{ number_format($penjualanHariIni, 0, ',', '.') }}"
+                    :note="$persenHarian !== null ? ($persenHarian >= 0 ? '+' : '').$persenHarian.'% dari kemarin' : null"
+                    noteClass="{{ $persenHarian !== null && $persenHarian >= 0 ? 'text-success' : 'text-danger' }}"/>
             </div>
             <div data-anim style="--anim-delay: 300ms">
-                <x-stat-card label="Stok Menipis" value="23" note="perlu restock" noteClass="text-amber-600"/>
+                <x-stat-card label="Stok Menipis" value="{{ $stokMenipis }}" note="perlu restock" noteClass="text-warning"/>
             </div>
         </div>
 
         <div class="grid gap-4 xl:grid-cols-3">
-            <section data-anim style="--anim-delay: 380ms" class="rounded-lg border border-gray-200 bg-white xl:col-span-2">
-                <header class="flex items-center justify-between border-b border-gray-200 px-5 py-4">
-                    <h2 class="text-sm font-semibold">Grafik Penjualan</h2>
-                    <span class="text-xs text-gray-400">7 hari terakhir</span>
+            <section data-anim style="--anim-delay: 380ms" class="glow-hover liquid-glass relative rounded-xl xl:col-span-2"><span class="card-glow"></span>
+                <header class="flex items-center justify-between border-b border-line px-5 py-4">
+                    <h2 class="text-sm font-semibold text-content">Grafik Penjualan</h2>
+                    <span class="text-xs text-subtle">7 hari terakhir</span>
                 </header>
                 <div class="p-5">
-                    <x-chart-bars :data="[
-                        ['label' => 'Sen', 'value' => 4100000, 'display' => 'Rp4,1jt'],
-                        ['label' => 'Sel', 'value' => 5300000, 'display' => 'Rp5,3jt'],
-                        ['label' => 'Rab', 'value' => 3800000, 'display' => 'Rp3,8jt'],
-                        ['label' => 'Kam', 'value' => 6200000, 'display' => 'Rp6,2jt'],
-                        ['label' => 'Jum', 'value' => 7400000, 'display' => 'Rp7,4jt'],
-                        ['label' => 'Sab', 'value' => 9800000, 'display' => 'Rp9,8jt'],
-                        ['label' => 'Min', 'value' => 12480000, 'display' => 'Rp12,4jt'],
-                    ]"/>
+                    <x-chart-bars :data="$grafik"/>
                 </div>
             </section>
 
-            <section data-anim style="--anim-delay: 460ms" class="rounded-lg border border-gray-200 bg-white">
-                <header class="flex items-center justify-between border-b border-gray-200 px-5 py-4">
-                    <h2 class="text-sm font-semibold">Produk Stok Menipis</h2>
-                    <a href="#" class="text-xs font-medium text-emerald-700 transition-colors hover:text-emerald-800">Lihat semua</a>
+            <section data-anim style="--anim-delay: 460ms" class="glow-hover liquid-glass relative rounded-xl"><span class="card-glow"></span>
+                <header class="flex items-center justify-between border-b border-line px-5 py-4">
+                    <h2 class="text-sm font-semibold text-content">Produk Stok Menipis</h2>
+                    <a href="{{ route('admin.produk.index', ['status' => 'menipis']) }}" class="text-xs font-medium text-primary transition-colors hover:text-primary-hover">Lihat semua</a>
                 </header>
-                <div class="overflow-x-auto">
-                    <table class="w-full min-w-[420px] text-left text-sm">
-                        <thead>
-                            <tr class="border-b border-gray-100 text-[11px] uppercase tracking-wide text-gray-400">
-                                <th class="px-5 py-2.5 font-medium">Produk</th>
-                                <th class="px-4 py-2.5 font-medium">SKU</th>
-                                <th class="px-4 py-2.5 text-right font-medium">Stok</th>
-                                <th class="px-5 py-2.5 font-medium">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-50">
-                            @foreach ([
-                                ['name' => 'Teko Pour Over 1,2L', 'sku' => 'SKU-1123', 'stock' => 8, 'status' => 'Menipis'],
-                                ['name' => 'Botol Cold Brew 750ml', 'sku' => 'SKU-1198', 'stock' => 0, 'status' => 'Habis'],
-                                ['name' => 'French Press 600ml', 'sku' => 'SKU-1156', 'stock' => 5, 'status' => 'Menipis'],
-                                ['name' => 'Filter Paper V60', 'sku' => 'SKU-1211', 'stock' => 12, 'status' => 'Menipis'],
-                            ] as $item)
-                                <tr class="transition-colors duration-150 hover:bg-gray-50">
-                                    <td class="max-w-[180px] px-5 py-3">
-                                        <p class="truncate font-medium">{{ $item['name'] }}</p>
-                                    </td>
-                                    <td class="whitespace-nowrap px-4 py-3 text-xs text-gray-500">{{ $item['sku'] }}</td>
-                                    <td class="px-4 py-3 text-right tabular-nums">{{ $item['stock'] }}</td>
-                                    <td class="px-5 py-3"><x-status-badge :status="$item['status']"/></td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                <div class="divide-y divide-line-soft">
+                    @forelse ($produkMenipis as $item)
+                        <div class="flex items-center justify-between gap-3 px-5 py-3.5 transition-colors duration-150 hover:bg-surface-hover">
+                            <div class="min-w-0">
+                                <p class="truncate text-sm font-medium text-content">{{ $item->nama }}</p>
+                                <p class="mt-0.5 text-xs text-subtle">{{ $item->sku }} · stok {{ $item->stok }}</p>
+                            </div>
+                            <x-status-badge :status="$item->getStatus()"/>
+                        </div>
+                    @empty
+                        <p class="px-5 py-8 text-center text-sm text-muted">Semua stok dalam kondisi aman.</p>
+                    @endforelse
                 </div>
             </section>
         </div>
 
-        <section data-anim style="--anim-delay: 540ms" class="rounded-lg border border-gray-200 bg-white">
-            <header class="flex items-center justify-between border-b border-gray-200 px-5 py-4">
-                <h2 class="text-sm font-semibold">Transaksi Terbaru</h2>
-                <a href="#" class="text-xs font-medium text-emerald-700 transition-colors hover:text-emerald-800">Lihat semua</a>
+        <section data-anim style="--anim-delay: 540ms" class="glow-hover liquid-glass relative rounded-xl"><span class="card-glow"></span>
+            <header class="flex items-center justify-between border-b border-line px-5 py-4">
+                <h2 class="text-sm font-semibold text-content">Transaksi Terbaru</h2>
+                <a href="{{ route('admin.laporan.index') }}" class="text-xs font-medium text-primary transition-colors hover:text-primary-hover">Lihat semua</a>
             </header>
             <div class="overflow-x-auto">
                 <table class="w-full min-w-[560px] text-left text-sm">
                     <thead>
-                        <tr class="border-b border-gray-100 text-[11px] uppercase tracking-wide text-gray-400">
+                        <tr class="border-b border-line-soft text-[11px] uppercase tracking-wide text-subtle">
                             <th class="px-5 py-2.5 font-medium">Invoice</th>
                             <th class="px-4 py-2.5 font-medium">Kasir</th>
                             <th class="px-4 py-2.5 font-medium">Tanggal</th>
@@ -105,22 +83,20 @@
                             <th class="px-5 py-2.5 font-medium">Status</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-50">
-                        @foreach ([
-                            ['invoice' => 'INV-240823-001', 'cashier' => 'Rina Amelia', 'date' => '23 Agu 2026 Â· 14:32', 'total' => 'Rp1.250.000', 'status' => 'Lunas'],
-                            ['invoice' => 'INV-240823-002', 'cashier' => 'Dewi Lestari', 'date' => '23 Agu 2026 Â· 13:05', 'total' => 'Rp860.000', 'status' => 'Lunas'],
-                            ['invoice' => 'INV-240822-014', 'cashier' => 'Rina Amelia', 'date' => '22 Agu 2026 Â· 16:48', 'total' => 'Rp2.340.000', 'status' => 'Lunas'],
-                            ['invoice' => 'INV-240822-013', 'cashier' => 'Andi Pratama', 'date' => '22 Agu 2026 Â· 11:20', 'total' => 'Rp450.000', 'status' => 'Pending'],
-                            ['invoice' => 'INV-240821-009', 'cashier' => 'Dewi Lestari', 'date' => '21 Agu 2026 Â· 15:12', 'total' => 'Rp1.780.000', 'status' => 'Lunas'],
-                        ] as $trx)
-                            <tr class="transition-colors duration-150 hover:bg-gray-50">
-                                <td class="whitespace-nowrap px-5 py-3 font-medium">{{ $trx['invoice'] }}</td>
-                                <td class="whitespace-nowrap px-4 py-3 text-gray-600">{{ $trx['cashier'] }}</td>
-                                <td class="whitespace-nowrap px-4 py-3 text-gray-500">{{ $trx['date'] }}</td>
-                                <td class="whitespace-nowrap px-4 py-3 text-right tabular-nums font-medium">{{ $trx['total'] }}</td>
-                                <td class="px-5 py-3"><x-status-badge :status="$trx['status']"/></td>
+                    <tbody class="divide-y divide-line-soft">
+                        @forelse ($transaksiTerbaru as $trx)
+                            <tr class="transition-colors duration-150 hover:bg-surface-hover">
+                                <td class="whitespace-nowrap px-5 py-3 font-medium text-content">{{ $trx->invoice }}</td>
+                                <td class="whitespace-nowrap px-4 py-3 text-muted">{{ $trx->kasir }}</td>
+                                <td class="whitespace-nowrap px-4 py-3 text-muted">{{ $trx->created_at->translatedFormat('d M Y · H:i') }}</td>
+                                <td class="whitespace-nowrap px-4 py-3 text-right tabular-nums font-medium text-content">Rp{{ number_format($trx->total, 0, ',', '.') }}</td>
+                                <td class="px-5 py-3"><x-status-badge :status="$trx->status"/></td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="5" class="px-5 py-8 text-center text-sm text-muted">Belum ada transaksi.</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

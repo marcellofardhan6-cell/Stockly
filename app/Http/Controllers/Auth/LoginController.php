@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-    private const ACCOUNTS = [
-        ['email' => 'admin@stockly.id', 'password' => 'password123', 'name' => 'Budi Santoso', 'role' => 'admin'],
-        ['email' => 'kasir@stockly.id', 'password' => 'password123', 'name' => 'Rina Amelia', 'role' => 'kasir'],
-    ];
-
     public function create()
     {
         if ($user = session('auth_user')) {
@@ -28,23 +25,21 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
-        $account = collect(self::ACCOUNTS)->first(
-            fn ($account) => $account['email'] === $credentials['email']
-                && $account['password'] === $credentials['password']
-        );
+        $user = User::where('email', $credentials['email'])->first();
 
-        if (! $account) {
+        if (! $user || ! Hash::check($credentials['password'], $user->password)) {
             return back()->withErrors(['email' => 'Email atau password salah.'])->onlyInput('email');
         }
 
         $request->session()->regenerate();
         $request->session()->put('auth_user', [
-            'name' => $account['name'],
-            'email' => $account['email'],
-            'role' => $account['role'],
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'role' => $user->role,
         ]);
 
-        return redirect()->route($account['role'] === 'admin' ? 'admin.dashboard' : 'kasir.dashboard');
+        return redirect()->route($user->role === 'admin' ? 'admin.dashboard' : 'kasir.dashboard');
     }
 
     public function destroy(Request $request)

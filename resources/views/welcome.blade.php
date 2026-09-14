@@ -1,377 +1,351 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Stockly membantu bisnis mengelola stok barang, mencatat penjualan, dan memantau aktivitas bisnis dalam satu tempat.">
-    <title>Stockly — Aplikasi Penjualan &amp; Manajemen Stok</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script>document.documentElement.classList.add('anim');</script>
+    <meta name="description" content="Stockly: platform penjualan & manajemen stok modern. Kelola stok, catat penjualan, dan pantau bisnis dalam satu ruang kerja yang sinematik.">
+    <title>Stockly — Kelola Stok. Sekelas Profesional.</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/landing.css', 'resources/js/landing.js'])
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.6.15/dist/hls.min.js"></script>
+    <style>html, body { overflow-x: clip; }</style>
 </head>
-<body class="overflow-x-clip bg-background font-sans text-content antialiased">
+<body class="landing-base bg-black font-sans text-white antialiased">
 
-    {{-- Loading splash --}}
-    <div class="splash" aria-hidden="true">
-        <div class="splash-logo">
-            <span class="splash-mark flex h-12 w-12 items-center justify-center rounded-xl bg-primary">
-                <svg class="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/>
-                    <path d="M3 8l9 5 9-5"/>
-                    <path d="M12 13v8"/>
-                </svg>
-            </span>
-            <span class="splash-spinner"></span>
-            <span class="splash-copy">Stockly</span>
-        </div>
-    </div>
-
-    {{-- ===== Navbar ===== --}}
-    <header data-anim style="--anim-y: -8px; --anim-d: 400ms" class="border-b border-line bg-surface">
-        <nav class="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-            <a href="/" class="flex items-center gap-2">
-                <span class="flex h-7 w-7 items-center justify-center rounded-md bg-primary">
-                    <svg class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/>
-                        <path d="M3 8l9 5 9-5"/>
-                        <path d="M12 13v8"/>
-                    </svg>
-                </span>
+    {{-- ===== Navbar (fixed, transparent) ===== --}}
+    <header class="fixed inset-x-0 top-0 z-50 bg-transparent px-6 py-4">
+        <nav class="mx-auto flex max-w-7xl items-center justify-between">
+            {{-- Left: sunburst logo --}}
+            <a href="/" class="anim-fade flex items-center gap-2" style="animation-delay:0.1s">
+                <svg class="h-6 w-6 text-white" viewBox="0 0 256 256" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M 4.688 136 C 68.373 136 120 187.627 120 251.312 C 120 252.883 119.967 254.445 119.905 256 L 0 256 L 0 136.096 C 1.555 136.034 3.117 136 4.688 136 Z M 251.312 136 C 252.883 136 254.445 136.034 256 136.096 L 256 256 L 136.095 256 C 136.032 254.438 136.001 252.875 136 251.312 C 136 187.627 187.627 136 251.312 136 Z M 119.905 0 C 119.967 1.555 120 3.117 120 4.688 C 120 68.373 68.373 120 4.687 120 C 3.117 120 1.555 119.967 0 119.905 L 0 0 Z M 256 119.905 C 254.445 119.967 252.883 120 251.312 120 C 187.627 120 136 68.373 136 4.687 C 136 3.117 136.033 1.555 136.095 0 L 256 0 Z" /></svg>
                 <span class="text-base font-semibold tracking-tight">Stockly</span>
             </a>
 
-            <div class="hidden items-center gap-7 text-sm md:flex">
-                <a href="#fitur" class="nav-link text-muted transition-colors hover:text-content">Fitur</a>
-                <a href="#tentang" class="nav-link text-muted transition-colors hover:text-content">Tentang</a>
-                <a href="{{ route('login') }}" class="nav-link text-muted transition-colors hover:text-content">Masuk</a>
-                <a href="{{ route('login') }}" class="btn-pop rounded-md bg-primary px-3.5 py-2 font-medium text-white transition-colors hover:bg-primary-hover">Mulai Sekarang</a>
+            {{-- Center: nav links --}}
+            <div class="anim-fade hidden items-center gap-8 md:flex" style="animation-delay:0.25s">
+                <a href="#fitur" class="flex items-center gap-1 text-sm font-medium text-white/80 transition-colors hover:text-white">
+                    Produk
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </a>
+                <a href="#modul" class="text-sm font-medium text-white/80 transition-colors hover:text-white">Modul</a>
+                <a href="#pratinjau" class="text-sm font-medium text-white/80 transition-colors hover:text-white">Pratinjau</a>
             </div>
 
-            <details class="relative md:hidden">
-                <summary class="flex h-9 w-9 cursor-pointer list-none items-center justify-center rounded-md border border-line text-muted [&::-webkit-details-marker]:hidden">
-                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-                        <path d="M4 7h16M4 12h16M4 17h16"/>
-                    </svg>
-                </summary>
-                <div class="absolute right-0 top-full z-20 mt-2 w-44 rounded-lg border border-line bg-surface p-1.5 shadow-lg">
-                    <a href="#fitur" class="block rounded-md px-3 py-2 text-sm text-content hover:bg-line-soft">Fitur</a>
-                    <a href="#tentang" class="block rounded-md px-3 py-2 text-sm text-content hover:bg-line-soft">Tentang</a>
-                    <a href="{{ route('login') }}" class="block rounded-md px-3 py-2 text-sm text-content hover:bg-line-soft">Masuk</a>
-                    <a href="{{ route('login') }}" class="btn-pop mt-1 block rounded-md bg-primary px-3 py-2 text-sm font-medium text-white hover:bg-primary-hover">Mulai Sekarang</a>
-                </div>
-            </details>
+            {{-- Right: demo + get started --}}
+            <div class="anim-fade flex items-center gap-5" style="animation-delay:0.25s">
+                <a href="{{ route('login') }}" class="hidden text-sm font-medium text-white/80 transition-colors hover:text-white sm:block">Masuk</a>
+                <a href="{{ route('login') }}" class="magnetic cta-glow rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black">
+                    Mulai Gratis
+                </a>
+            </div>
         </nav>
     </header>
 
-    <main>
-        {{-- ===== Hero ===== --}}
-        <section class="relative mx-auto max-w-6xl overflow-visible px-6 pb-16 pt-14 lg:pb-24 lg:pt-20">
+    {{-- ===== Hero ===== --}}
+    <section class="relative min-h-screen w-full overflow-hidden bg-black text-white">
+        {{-- HLS video background (fades in over black once playing) --}}
+        <video id="hero-video" muted loop playsinline
+            class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-1000">
+        </video>
 
-            {{-- Dekorasi background --}}
-            <div class="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+        {{-- Overlay --}}
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-[2px]"></div>
 
-                <svg class="absolute -left-20 top-4 h-72 w-72 text-muted lg:-left-28 lg:h-96 lg:w-96" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.4">
-                    <circle cx="100" cy="100" r="96" opacity="0.55"/>
-                    <circle cx="100" cy="100" r="74" opacity="0.38"/>
-                    <circle cx="100" cy="100" r="52" opacity="0.25"/>
-                </svg>
+        {{-- Decorative gradients --}}
+        <div class="pointer-events-none absolute left-[20%] top-[-20%] h-[600px] w-[600px] rounded-full bg-blue-900/20 blur-[120px] mix-blend-screen"></div>
+        <div class="pointer-events-none absolute bottom-[-10%] right-[20%] h-[500px] w-[500px] rounded-full bg-indigo-900/20 blur-[120px] mix-blend-screen"></div>
 
-                <svg class="decor-curve absolute -right-16 top-32 h-80 w-80 text-primary lg:-right-20 lg:h-96 lg:w-96" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.13">
-                    <path d="M10 120 C 70 30, 130 170, 190 80"/>
-                    <circle cx="190" cy="80" r="4" fill="currentColor" stroke="none"/>
-                    <circle cx="10" cy="120" r="4" fill="currentColor" stroke="none"/>
-                    <path d="M40 170 v -16 M56 170 v -16 M40 186 v -16"/>
-                </svg>
+        {{-- Content --}}
+        <div class="relative z-10 mx-auto mt-20 flex max-w-5xl flex-col items-center space-y-12 px-6 text-center">
+            <div class="flex min-h-screen flex-col items-center justify-center space-y-12 pb-24 pt-16">
 
-                <svg class="decor-package absolute right-28 top-10 hidden h-44 w-44 text-muted md:block" viewBox="0 0 176 176" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.3">
-                    <rect x="8" y="8" width="160" height="160" rx="12"/>
-                    <circle cx="45" cy="45" r="12"/>
-                    <circle cx="45" cy="131" r="12"/>
-                    <circle cx="131" cy="88" r="12"/>
-                    <path d="M59 45 h 50 M131 45 v 34 M59 131 h 60 M131 102 v 40"/>
-                    <path d="M45 59 v 58"/>
-                </svg>
+                {{-- Pre-headline (Instrument Serif) --}}
+                <p class="anim-rise font-serif text-3xl leading-[1.1] text-white sm:text-5xl lg:text-[48px]" style="animation-delay:0.1s">
+                    Kelola stok secepat pikiran.
+                </p>
 
-                <svg class="absolute left-1/2 top-0 hidden h-52 w-52 -translate-x-1/2 text-line lg:block" viewBox="0 0 208 208" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.7">
-                    <path d="M0 52 L 208 52 M0 104 L 208 104 M0 156 L 208 156"/>
-                    <path d="M52 0 v 208 M104 0 v 208 M156 0 v 208"/>
-                </svg>
+                {{-- Main headline (gradient) --}}
+                <h1 class="anim-pop bg-gradient-to-b from-white via-white to-[#b4c0ff] bg-clip-text pb-3 text-6xl font-semibold leading-[0.9] tracking-tighter text-transparent sm:text-8xl lg:text-[136px]" style="animation-delay:0.25s">
+                    Build Faster
+                </h1>
 
-                <svg class="absolute -left-8 top-[55%] hidden h-44 w-44 text-primary lg:block" viewBox="0 0 160 160" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.12">
-                    <path d="M40 120 L 80 40 L 120 120 Z"/>
-                    <path d="M80 40 v 80"/>
-                    <path d="M40 120 h 80"/>
-                </svg>
+                {{-- Subheadline --}}
+                <p class="anim-fade max-w-xl text-lg leading-[1.65] text-white/70 sm:text-[20px]" style="animation-delay:0.45s">
+                    Stockly menyatukan inventaris, penjualan, dan supplier dalam satu platform yang cepat dan indah — siap dalam hitungan detik.
+                </p>
 
-                <svg class="absolute bottom-8 left-1/3 hidden h-36 w-36 text-muted xl:block" viewBox="0 0 144 144" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.22">
-                    <path d="M28 28 L 116 44 M36 116 L 124 100 M72 12 L 72 132"/>
-                    <circle cx="28" cy="28" r="5"/>
-                    <circle cx="116" cy="44" r="5"/>
-                    <circle cx="36" cy="116" r="5"/>
-                    <circle cx="124" cy="100" r="5"/>
-                    <circle cx="72" cy="12" r="5"/>
-                    <circle cx="72" cy="132" r="5"/>
-                </svg>
+                {{-- CTA buttons --}}
+                <div class="anim-rise flex flex-col items-center gap-6 sm:flex-row" style="animation-delay:0.65s">
+                    {{-- Primary: white pill + blue arrow --}}
+                    <a href="{{ route('login') }}" class="magnetic group inline-flex items-center rounded-full bg-white py-2 pl-6 pr-2 shadow-none transition-shadow hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                        <span class="mr-3 text-lg font-medium text-[#0a0400]">Mulai Gratis</span>
+                        <span class="flex h-10 w-10 items-center justify-center rounded-full bg-[#3054ff] transition-colors group-hover:bg-[#2040e0]">
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        </span>
+                    </a>
 
-                <span class="decor-node absolute right-8 top-10 h-2.5 w-2.5 rounded-full bg-primary" style="--op: 0.25"></span>
-                <span class="absolute right-24 top-16 h-2 w-2 rounded-full bg-muted opacity-30" style="animation-delay: 0.8s"></span>
-                <span class="decor-node absolute left-1/4 bottom-16 h-2.5 w-2.5 rounded-full bg-primary" style="--op: 0.2; animation-delay: 1.2s"></span>
-                <span class="absolute left-16 top-[30%] h-1.5 w-1.5 rounded-full bg-muted opacity-25" style="animation-delay: 0.4s"></span>
-            </div>
-
-            <div class="relative z-10 grid items-center gap-12 lg:grid-cols-2">
-                <div>
-                    <p data-anim style="--anim-delay: 60ms; --anim-y: 10px" class="text-sm font-medium uppercase tracking-wide text-primary">Aplikasi Penjualan &amp; Manajemen Stok</p>
-                    <h1 data-anim style="--anim-delay: 140ms; --anim-y: 15px; --anim-d: 600ms" class="mt-3 text-4xl font-semibold leading-tight tracking-tight text-content lg:text-5xl">
-                        Kelola Stok.<br>
-                        Kelola Bisnis.
-                    </h1>
-                    <p data-anim style="--anim-delay: 250ms; --anim-y: 10px" class="mt-5 max-w-md text-base leading-relaxed text-muted lg:text-lg">
-                        Stockly membantu bisnis mengelola stok barang, mencatat penjualan, dan memantau aktivitas bisnis dalam satu tempat.
-                    </p>
-                    <div data-anim style="--anim-delay: 340ms; --anim-y: 8px" class="mt-8 flex items-center gap-3">
-                        <a href="{{ route('login') }}" class="btn-pop rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-primary-hover">Mulai Sekarang</a>
-                        <a href="{{ route('login') }}" class="btn-pop rounded-md border border-line bg-surface px-4 py-2.5 text-sm font-medium text-content transition-colors hover:bg-line-soft">Masuk</a>
-                    </div>
+                    {{-- Secondary: text link --}}
+                    <a href="#pratinjau" class="group inline-flex items-center gap-2 rounded-lg px-4 py-2 text-white/70 backdrop-blur-sm transition-colors hover:bg-white/5 hover:text-white">
+                        Lihat Contoh
+                        <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
                 </div>
 
-                <div data-anim style="--anim-delay: 400ms; --anim-y: 10px; --anim-s: 0.97; --anim-d: 600ms" class="card-lift rounded-lg border border-line bg-surface shadow-sm">
-                    <div class="flex items-center gap-1.5 border-b border-line px-4 py-2.5">
-                        <span class="h-2.5 w-2.5 rounded-full bg-line"></span>
-                        <span class="h-2.5 w-2.5 rounded-full bg-line"></span>
-                        <span class="h-2.5 w-2.5 rounded-full bg-line"></span>
-                        <span class="ml-3 text-xs text-subtle">Stockly — Inventaris</span>
+            </div>
+        </div>
+    </section>
+
+    {{-- ===== Pratinjau (dashboard mockup) ===== --}}
+    <section id="pratinjau" class="relative mx-auto max-w-6xl scroll-mt-24 px-6 py-24">
+        <div class="landing-reveal mx-auto mb-12 max-w-2xl text-center">
+            <p class="font-serif text-2xl italic text-[#b4c0ff] sm:text-3xl">Pratinjau</p>
+            <h2 class="mt-4 bg-gradient-to-b from-white to-[#b4c0ff] bg-clip-text pb-2 text-3xl font-semibold tracking-tight text-transparent md:text-5xl">Ruang kerja yang terasa hidup.</h2>
+        </div>
+
+        <div class="landing-reveal scale-in relative" style="--rd:150ms" data-parallax="0.05">
+            <div class="pointer-events-none absolute -inset-8 rounded-[2rem] bg-gradient-to-b from-[#3054ff]/15 to-transparent blur-2xl"></div>
+            <div class="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0b0e14]/90 shadow-2xl backdrop-blur-2xl">
+                <div class="flex h-11 items-center gap-3 border-b border-white/10 px-4">
+                    <span class="h-3 w-3 rounded-full" style="background:#ff5f57"></span>
+                    <span class="h-3 w-3 rounded-full" style="background:#febc2e"></span>
+                    <span class="h-3 w-3 rounded-full" style="background:#28c840"></span>
+                    <span class="ml-2 text-xs text-white/50">Stockly — Inventaris</span>
+                </div>
+
+                <div class="grid h-[520px] grid-cols-12">
+                    {{-- Sidebar --}}
+                    <div class="col-span-3 border-r border-white/10 bg-black/30 p-4">
+                        <button class="mb-4 flex items-center gap-2 rounded-lg bg-white px-3 py-2 text-xs font-semibold text-black">
+                            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg>
+                            Tambah Produk
+                        </button>
+                        <div class="space-y-1 text-sm">
+                            @foreach([
+                                ['Dasbor', 0, true], ['Produk', 284, false], ['Kategori', 8, false],
+                                ['Supplier', 12, false], ['Penjualan', 0, false], ['Laporan', 0, false],
+                            ] as [$label, $count, $active])
+                                <div class="{{ $active ? 'bg-white/10 text-white' : 'text-white/60 hover:bg-white/5' }} flex items-center justify-between rounded-md px-3 py-2">
+                                    <span class="{{ $active ? 'font-medium' : '' }}">{{ $label }}</span>
+                                    @if ($count > 0)<span class="text-xs text-white/50">{{ $count }}</span>@endif
+                                </div>
+                            @endforeach
+                        </div>
+                        <p class="mt-6 text-[10px] font-medium uppercase tracking-wider text-white/40">Kategori</p>
+                        <div class="mt-3 space-y-2 text-xs">
+                            @foreach(['Kopi' => '#34d399', 'Peralatan Minum' => '#3054ff', 'Peralatan' => '#b4c0ff', 'Aksesori' => '#fbbf24'] as $label => $color)
+                                <div class="flex items-center gap-2 text-white/60">
+                                    <span class="h-2 w-2 rounded-full" style="background:{{ $color }}"></span>{{ $label }}
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
 
-                    <div class="grid grid-cols-3 divide-x divide-line-soft border-b border-line">
-                        <div data-anim style="--anim-delay: 520ms" class="p-4">
-                            <p class="text-[11px] font-medium uppercase tracking-wide text-subtle">Produk</p>
-                            <p class="mt-1 text-lg font-semibold tabular-nums" data-count-to="1284" data-count-delay="520">1.284</p>
-                            <p class="mt-0.5 text-xs text-primary">+32 minggu ini</p>
-                        </div>
-                        <div data-anim style="--anim-delay: 600ms" class="p-4">
-                            <p class="text-[11px] font-medium uppercase tracking-wide text-subtle">Stok menipis</p>
-                            <p class="mt-1 text-lg font-semibold tabular-nums" data-count-to="23" data-count-delay="600">23</p>
-                            <p class="mt-0.5 text-xs text-muted">perlu restock</p>
-                        </div>
-                        <div data-anim style="--anim-delay: 680ms" class="p-4">
-                            <p class="text-[11px] font-medium uppercase tracking-wide text-subtle">Penjualan hari ini</p>
-                            <p class="mt-1 text-lg font-semibold tabular-nums" data-count-to="2450000" data-count-prefix="Rp " data-count-delay="680">Rp 2.450.000</p>
-                            <p class="mt-0.5 text-xs text-primary">+4,2%</p>
-                        </div>
-                    </div>
-
-                    <div class="px-4 py-2 text-xs">
-                        <div class="grid grid-cols-[1fr_auto_auto] items-center gap-4 border-b border-line-soft pb-2 font-medium uppercase tracking-wide text-subtle">
-                            <span>Produk</span>
-                            <span class="text-right">Stok</span>
-                            <span>Status</span>
+                    {{-- List --}}
+                    <div class="col-span-4 border-r border-white/10">
+                        <div class="flex items-center gap-2 border-b border-white/10 px-4 py-3 text-white/50">
+                            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                            <span class="text-xs">Cari produk</span>
                         </div>
                         @foreach([
-                            ['name' => 'Kopi Arabica Biji 1kg', 'sku' => 'SKU-1042', 'stock' => 128, 'status' => 'Tersedia', 'class' => 'bg-success-soft text-success'],
-                            ['name' => 'Mug Keramik Putih Matte', 'sku' => 'SKU-1087', 'stock' => 42, 'status' => 'Tersedia', 'class' => 'bg-success-soft text-success'],
-                            ['name' => 'Teko Pour Over 1,2L', 'sku' => 'SKU-1123', 'stock' => 8, 'status' => 'Stok menipis', 'class' => 'bg-warning-soft text-warning'],
-                            ['name' => 'Botol Cold Brew 750ml', 'sku' => 'SKU-1198', 'stock' => 0, 'status' => 'Stok habis', 'class' => 'bg-danger-soft text-danger'],
-                        ] as $item)
-                            <div data-anim style="--anim-delay: {{ 740 + $loop->index * 80 }}ms" class="grid grid-cols-[1fr_auto_auto] items-center gap-4 border-b border-line-soft py-2.5 last:border-0">
-                                <div class="min-w-0">
-                                    <p class="truncate text-content">{{ $item['name'] }}</p>
-                                    <p class="text-[11px] text-subtle">{{ $item['sku'] }}</p>
+                            ['KOP-0001', 'Kopi Arabica Biji 1kg', 'Stok 128 · Tersedia', '09:41', true, true],
+                            ['PRM-0001', 'Mug Keramik Putih Matte', 'Stok 42 · Tersedia', '08:12', true, false],
+                            ['PRL-0001', 'Teko Pour Over 1,2L', 'Stok 8 · Menipis', 'Kemarin', false, false],
+                            ['PRM-0002', 'Botol Cold Brew 750ml', 'Stok 0 · Habis', 'Kemarin', false, false],
+                            ['AKS-0001', 'Filter Paper V60', 'Stok 300 · Tersedia', 'Sen', false, false],
+                            ['PRL-0003', 'Timbangan Digital 0,1g', 'Stok 64 · Tersedia', 'Sen', false, false],
+                        ] as [$sku, $nama, $ket, $waktu, $unread, $active])
+                            <div class="{{ $active ? 'bg-white/10' : 'hover:bg-white/5' }} cursor-pointer border-b border-white/[0.06] px-4 py-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-medium text-white">{{ $nama }}</span>
+                                    <span class="text-[10px] text-white/40">{{ $waktu }}</span>
                                 </div>
-                                <span class="text-right tabular-nums text-muted">{{ $item['stock'] }}</span>
-                                <span data-anim-fade style="--anim-delay: {{ 810 + $loop->index * 80 }}ms" class="inline-flex w-[92px] justify-center rounded-full px-2 py-0.5 text-[11px] font-medium {{ $item['class'] }}">{{ $item['status'] }}</span>
+                                <p class="mt-0.5 text-[11px] text-white/30">{{ $sku }}</p>
+                                <p class="mt-0.5 truncate text-[11px] {{ $unread ? 'text-white/70' : 'text-white/40' }}">{{ $ket }}</p>
                             </div>
                         @endforeach
                     </div>
 
-                    <div data-anim style="--anim-delay: 1040ms" class="border-t border-line px-4 py-2.5 text-xs text-subtle">
-                        Menampilkan 4 dari 1.284 produk
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        {{-- ===== Fitur ===== --}}
-        <section id="fitur" class="border-t border-line bg-surface">
-            <div class="mx-auto max-w-6xl px-6 py-20">
-                <div data-reveal class="max-w-xl">
-                    <h2 class="text-2xl font-semibold tracking-tight text-content lg:text-3xl">Semua yang dibutuhkan bisnis Anda</h2>
-                    <p class="mt-3 text-base leading-relaxed text-muted">
-                        Stockly mencakup pekerjaan harian bisnis yang menjual produk fisik.
-                    </p>
-                </div>
-
-                <div class="mt-12 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3">
-                    <div data-reveal class="bg-surface p-6">
-                        <div class="flex h-9 w-9 items-center justify-center rounded-md border border-line text-content">
-                            <svg class="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/>
-                                <path d="M3 8l9 5 9-5"/>
-                                <path d="M12 13v8"/>
-                            </svg>
-                        </div>
-                        <h3 class="mt-4 text-sm font-semibold text-content">Manajemen Stok</h3>
-                        <p class="mt-1.5 text-sm leading-relaxed text-muted">Pantau jumlah dan kondisi stok barang dengan mudah.</p>
-                    </div>
-                    <div data-reveal class="bg-surface p-6">
-                        <div class="flex h-9 w-9 items-center justify-center rounded-md border border-line text-content">
-                            <svg class="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="8" cy="21" r="1"/>
-                                <circle cx="19" cy="21" r="1"/>
-                                <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
-                            </svg>
-                        </div>
-                        <h3 class="mt-4 text-sm font-semibold text-content">Penjualan</h3>
-                        <p class="mt-1.5 text-sm leading-relaxed text-muted">Catat transaksi penjualan dan stok akan diperbarui secara otomatis.</p>
-                    </div>
-                    <div data-reveal class="bg-surface p-6">
-                        <div class="flex h-9 w-9 items-center justify-center rounded-md border border-line text-content">
-                            <svg class="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M3 3v18h18"/>
-                                <path d="M7 15l4-5 3 3 5-7"/>
-                            </svg>
-                        </div>
-                        <h3 class="mt-4 text-sm font-semibold text-content">Laporan</h3>
-                        <p class="mt-1.5 text-sm leading-relaxed text-muted">Lihat aktivitas dan perkembangan bisnis dengan laporan yang sederhana.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        {{-- ===== Pratinjau aplikasi ===== --}}
-        <section id="pratinjau" class="mx-auto max-w-6xl px-6 py-20">
-            <div data-reveal class="max-w-xl">
-                <h2 class="text-2xl font-semibold tracking-tight text-content lg:text-3xl">Ruang kerja yang berfokus pada stok Anda</h2>
-                <p class="mt-3 text-base leading-relaxed text-muted">
-                    Satu layar untuk memeriksa stok, mencatat penjualan, dan menemukan barang yang perlu di-restock.
-                </p>
-            </div>
-
-            <div data-reveal style="--anim-delay: 100ms; --anim-y: 16px" class="mt-10 overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
-                <div class="flex">
-                    <aside class="hidden w-48 shrink-0 border-r border-line p-3 sm:block">
-                        <div class="flex items-center gap-2 px-2 py-1.5">
-                            <span class="flex h-6 w-6 items-center justify-center rounded-md bg-primary">
-                                <svg class="h-3.5 w-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/>
-                                    <path d="M3 8l9 5 9-5"/>
-                                    <path d="M12 13v8"/>
-                                </svg>
-                            </span>
-                            <span class="text-sm font-semibold tracking-tight">Stockly</span>
-                        </div>
-                        <nav class="mt-4 space-y-0.5 text-sm">
-                            <span class="block rounded-md px-2 py-1.5 text-muted">Dasbor</span>
-                            <span class="block rounded-md bg-primary-soft px-2 py-1.5 font-medium text-primary">Inventaris</span>
-                            <span class="block rounded-md px-2 py-1.5 text-muted">Penjualan</span>
-                            <span class="block rounded-md px-2 py-1.5 text-muted">Laporan</span>
-                        </nav>
-                        <div class="mt-40 border-t border-line-soft pt-3">
-                            <span class="block rounded-md px-2 py-1.5 text-sm text-muted">Pengaturan</span>
-                        </div>
-                    </aside>
-
-                    <div class="min-w-0 flex-1">
-                        <div class="flex items-center justify-between border-b border-line px-4 py-3">
-                            <p class="text-sm font-semibold">Inventaris</p>
-                            <span class="btn-pop rounded-md bg-primary px-2.5 py-1.5 text-xs font-medium text-white">Tambah produk</span>
-                        </div>
-
-                        <div class="grid grid-cols-3 gap-px border-b border-line bg-line">
-                            <div class="bg-surface px-4 py-3">
-                                <p class="text-[11px] font-medium uppercase tracking-wide text-subtle">Total produk</p>
-                                <p class="mt-0.5 text-base font-semibold tabular-nums">1.284</p>
+                    {{-- Detail produk --}}
+                    <div class="col-span-5">
+                        <div class="flex items-center justify-between border-b border-white/10 px-4 py-2">
+                            <div class="flex gap-1">
+                                @foreach(['M12 20h9', 'M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6', 'M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2'] as $d)
+                                    <span class="flex h-7 w-7 items-center justify-center rounded-md text-white/70 hover:bg-white/5">
+                                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="{{ $d }}"/></svg>
+                                    </span>
+                                @endforeach
                             </div>
-                            <div class="bg-surface px-4 py-3">
-                                <p class="text-[11px] font-medium uppercase tracking-wide text-subtle">Stok menipis</p>
-                                <p class="mt-0.5 text-base font-semibold tabular-nums">23</p>
+                            <svg class="h-4 w-4 text-white/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                        </div>
+                        <div class="px-6 py-6">
+                            <p class="text-lg font-semibold">Kopi Arabica Biji 1kg</p>
+                            <div class="mt-4 flex items-center gap-2">
+                                <span class="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-[#3054ff] to-[#152a86] text-xs font-semibold text-white">K</span>
+                                <div>
+                                    <p class="text-xs font-medium text-white">Kategori: Kopi</p>
+                                    <p class="text-[11px] text-white/40">SKU KOP-0001 · diperbarui 09:41</p>
+                                </div>
+                                <span class="ml-auto rounded-full px-2 py-0.5 text-[10px]" style="background:#34d39933;color:#34d399">Tersedia</span>
                             </div>
-                            <div class="bg-surface px-4 py-3">
-                                <p class="text-[11px] font-medium uppercase tracking-wide text-subtle">Penjualan hari ini</p>
-                                <p class="mt-0.5 text-base font-semibold tabular-nums">Rp 2.450.000</p>
+                            <div class="mt-5 flex gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                                <svg class="h-4 w-4 shrink-0" style="color:#b4c0ff" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a5 5 0 0 0-5 5v2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5z"/></svg>
+                                <div class="text-xs leading-relaxed text-white/70"><span class="font-medium text-white">Ringkasan oleh Stockly.</span> Stok aman untuk 3 bulan. 23 terjual minggu ini, restock disarankan sebelum stok mencapai 20 unit.</div>
+                            </div>
+                            @foreach(['Stok saat ini', 'Harga beli', 'Harga jual', 'Terjual bulan ini'] as $i2 => $p)
+                                <div class="mt-3 flex items-center justify-between border-b border-white/[0.06] pb-2 text-xs">
+                                    <span class="text-white/50">{{ $p }}</span>
+                                    <span class="{{ $i2 === 3 ? 'font-medium text-[#34d399]' : 'text-white/80' }}">{{ ['128 unit', 'Rp 85.000', 'Rp 120.000', '92 unit'][$i2] }}</span>
+                                </div>
+                            @endforeach
+                            <div class="mt-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs text-white/80">
+                                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+                                Laporan stok · Mei 2026
                             </div>
                         </div>
-
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left text-xs sm:text-sm">
-                                <thead>
-                                    <tr class="border-b border-line-soft text-[11px] uppercase tracking-wide text-subtle">
-                                        <th class="px-4 py-2.5 font-medium">Produk</th>
-                                        <th class="hidden px-4 py-2.5 font-medium md:table-cell">Kategori</th>
-                                        <th class="px-4 py-2.5 text-right font-medium">Stok</th>
-                                        <th class="px-4 py-2.5 font-medium">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-line-soft">
-                                    @foreach([
-                                        ['name' => 'Kopi Arabica Biji 1kg', 'sku' => 'SKU-1042', 'category' => 'Kopi', 'stock' => 128, 'status' => 'Tersedia', 'dot' => 'bg-success', 'class' => 'bg-success-soft text-success'],
-                                        ['name' => 'Mug Keramik Putih Matte', 'sku' => 'SKU-1087', 'category' => 'Peralatan Minum', 'stock' => 42, 'status' => 'Tersedia', 'dot' => 'bg-success', 'class' => 'bg-success-soft text-success'],
-                                        ['name' => 'Teko Pour Over 1,2L', 'sku' => 'SKU-1123', 'category' => 'Peralatan', 'stock' => 8, 'status' => 'Stok menipis', 'dot' => 'bg-warning', 'class' => 'bg-warning-soft text-warning'],
-                                        ['name' => 'Botol Cold Brew 750ml', 'sku' => 'SKU-1198', 'category' => 'Peralatan Minum', 'stock' => 0, 'status' => 'Stok habis', 'dot' => 'bg-danger', 'class' => 'bg-danger-soft text-danger'],
-                                        ['name' => 'Timbangan Digital 0,1g', 'sku' => 'SKU-1240', 'category' => 'Peralatan', 'stock' => 64, 'status' => 'Tersedia', 'dot' => 'bg-success', 'class' => 'bg-success-soft text-success'],
-                                    ] as $item)
-                                        <tr>
-                                            <td class="max-w-[180px] px-4 py-2.5 sm:max-w-none">
-                                                <p class="truncate font-medium text-content">{{ $item['name'] }}</p>
-                                                <p class="text-[11px] text-subtle">{{ $item['sku'] }}</p>
-                                            </td>
-                                            <td class="hidden px-4 py-2.5 text-muted md:table-cell">{{ $item['category'] }}</td>
-                                            <td class="px-4 py-2.5 text-right tabular-nums text-muted">{{ $item['stock'] }}</td>
-                                            <td class="px-4 py-2.5">
-                                                <span class="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2 py-0.5 text-[11px] font-medium {{ $item['class'] }}">
-                                                    <span class="h-1.5 w-1.5 rounded-full {{ $item['dot'] }}"></span>{{ $item['status'] }}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
-    {{-- ===== Footer ===== --}}
-    <footer id="tentang" class="border-t border-line bg-surface">
-        <div data-reveal class="mx-auto max-w-6xl px-6 py-12">
-            <div class="flex flex-col justify-between gap-8 sm:flex-row">
-                <div class="max-w-sm">
-                    <div class="flex items-center gap-2">
-                        <span class="flex h-6 w-6 items-center justify-center rounded-md bg-primary">
-                            <svg class="h-3.5 w-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/>
-                                <path d="M3 8l9 5 9-5"/>
-                                <path d="M12 13v8"/>
-                            </svg>
+    {{-- ===== Modul (fitur) ===== --}}
+    <section id="modul" class="relative mx-auto max-w-6xl px-6 py-24">
+        <div class="landing-reveal mx-auto max-w-2xl text-center">
+            <p class="font-serif text-2xl italic text-[#b4c0ff] sm:text-3xl">Semua yang Anda butuhkan</p>
+            <h2 class="mt-4 bg-gradient-to-b from-white to-[#b4c0ff] bg-clip-text pb-2 text-3xl font-semibold tracking-tight text-transparent md:text-5xl">Satu platform, semua terhubung.</h2>
+        </div>
+
+        <div class="stagger-grid mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" style="--si:0">
+            @foreach([
+                ['box', 'Produk', 'CRUD lengkap dengan SKU otomatis, pencarian & filter status stok.'],
+                ['tag', 'Kategori', 'Kelompokkan produk dengan kode unik sebagai prefiks SKU.'],
+                ['truck', 'Supplier', 'Kelola data pemasok barang Anda dengan rapi.'],
+                ['import', 'Barang Masuk', 'Catat restock dari supplier, stok bertambah otomatis.'],
+                ['cart', 'Penjualan', 'POS kasir cepat dengan proteksi overselling.'],
+                ['chart', 'Laporan', 'Rekap penjualan, produk terlaris & kesehatan stok.'],
+            ] as $i => [$icon, $title, $desc])
+                <div class="glow-hover liquid-glass group relative rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1.5" style="--si:{{ $i + 1 }}">
+                    <span class="card-glow"></span>
+                    <span class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#3054ff]/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+                    <div class="flex items-start justify-between">
+                        <span class="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-gradient-to-br from-[#3054ff]/20 to-transparent text-[#b4c0ff] transition-all duration-300 group-hover:border-[#3054ff]/40 group-hover:text-white">
+                            <x-icon :name="$icon" class="h-6 w-6"/>
                         </span>
-                        <span class="text-sm font-semibold tracking-tight">Stockly</span>
+                        <span class="text-xs font-bold tabular-nums text-white/20 transition-colors duration-300 group-hover:text-[#3054ff]/70">0{{ $i + 1 }}</span>
                     </div>
-                    <p class="mt-3 text-sm leading-relaxed text-muted">Aplikasi Penjualan &amp; Manajemen Stok untuk bisnis Anda.</p>
+                    <h3 class="mt-5 text-base font-semibold tracking-tight text-white">{{ $title }}</h3>
+                    <p class="mt-2 text-sm leading-relaxed text-white/50">{{ $desc }}</p>
                 </div>
-                <div class="flex gap-14 text-sm">
-                    <div>
-                        <p class="font-medium text-content">Produk</p>
-                        <ul class="mt-3 space-y-2">
-                            <li><a href="#fitur" class="text-muted hover:text-content">Fitur</a></li>
-                            <li><a href="#pratinjau" class="text-muted hover:text-content">Pratinjau</a></li>
-                        </ul>
+            @endforeach
+        </div>
+    </section>
+
+    {{-- ===== Final CTA ===== --}}
+    <section id="fitur" class="px-6 py-24">
+        <div class="landing-reveal scale-in liquid-glass relative mx-auto max-w-5xl overflow-hidden rounded-3xl px-8 py-16 text-center md:py-24">
+            <div class="pointer-events-none absolute left-[20%] top-[-30%] h-[400px] w-[400px] rounded-full bg-blue-900/20 blur-[100px] mix-blend-screen"></div>
+            <div class="relative">
+                <p class="font-serif text-2xl italic text-[#b4c0ff] sm:text-3xl">Siap merapikan bisnis Anda?</p>
+                <h2 class="mt-4 bg-gradient-to-b from-white to-[#b4c0ff] bg-clip-text pb-2 text-4xl font-semibold leading-[1.02] tracking-tight text-transparent md:text-6xl">
+                    Mulai hari ini.
+                </h2>
+                <div class="mt-9 flex flex-wrap items-center justify-center gap-4">
+                    <a href="{{ route('login') }}" class="magnetic group inline-flex items-center rounded-full bg-white py-2 pl-6 pr-2 transition-shadow hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                        <span class="mr-3 text-lg font-medium text-[#0a0400]">Mulai Gratis</span>
+                        <span class="flex h-10 w-10 items-center justify-center rounded-full bg-[#3054ff] transition-colors group-hover:bg-[#2040e0]">
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- ===== Footer (liquid glass) ===== --}}
+    <footer class="px-6 pb-10">
+        <div class="landing-reveal liquid-glass mx-auto w-full max-w-6xl rounded-3xl p-6 text-white/70 md:p-10">
+            <div class="mb-10 grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-12">
+                <div class="md:col-span-5">
+                    <div class="flex items-center gap-2 text-white">
+                        <svg class="h-6 w-6" viewBox="0 0 256 256" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M 4.688 136 C 68.373 136 120 187.627 120 251.312 C 120 252.883 119.967 254.445 119.905 256 L 0 256 L 0 136.096 C 1.555 136.034 3.117 136 4.688 136 Z M 251.312 136 C 252.883 136 254.445 136.034 256 136.096 L 256 256 L 136.095 256 C 136.032 254.438 136.001 252.875 136 251.312 C 136 187.627 187.627 136 251.312 136 Z M 119.905 0 C 119.967 1.555 120 3.117 120 4.688 C 120 68.373 68.373 120 4.687 120 C 3.117 120 1.555 119.967 0 119.905 L 0 0 Z M 256 119.905 C 254.445 119.967 252.883 120 251.312 120 C 187.627 120 136 68.373 136 4.687 C 136 3.117 136.033 1.555 136.095 0 L 256 0 Z" /></svg>
+                        <span class="text-xl font-medium tracking-wide">STOCKLY</span>
                     </div>
-                    <div>
-                        <p class="font-medium text-content">Akun</p>
-                        <ul class="mt-3 space-y-2">
-                            <li><a href="{{ route('login') }}" class="text-muted hover:text-content">Masuk</a></li>
-                            <li><a href="{{ route('login') }}" class="text-muted hover:text-content">Mulai Sekarang</a></li>
-                        </ul>
+                    <p class="mt-4 max-w-sm text-sm leading-relaxed">Stockly menyatukan inventaris, penjualan, dan supplier dalam satu ruang kerja yang cepat dan indah — gratis untuk memulai.</p>
+                </div>
+                <div class="md:col-span-7">
+                    <div class="grid grid-cols-2 gap-8 sm:grid-cols-3">
+                        <div>
+                            <p class="mb-4 text-sm font-medium uppercase tracking-wider text-white">Jelajahi</p>
+                            <ul class="space-y-2 text-xs">
+                                <li><a href="{{ route('login') }}" class="transition-colors hover:text-white">Dashboard Admin</a></li>
+                                <li><a href="{{ route('login') }}" class="transition-colors hover:text-white">Kasir / POS</a></li>
+                                <li><a href="{{ route('login') }}" class="transition-colors hover:text-white">Laporan</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="mb-4 text-sm font-medium uppercase tracking-wider text-white">Modul</p>
+                            <ul class="space-y-2 text-xs">
+                                <li><a href="{{ route('login') }}" class="transition-colors hover:text-white">Produk</a></li>
+                                <li><a href="{{ route('login') }}" class="transition-colors hover:text-white">Kategori</a></li>
+                                <li><a href="{{ route('login') }}" class="transition-colors hover:text-white">Supplier</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="mb-4 text-sm font-medium uppercase tracking-wider text-white">Akun</p>
+                            <ul class="space-y-2 text-xs">
+                                <li><a href="{{ route('login') }}" class="transition-colors hover:text-white">Masuk</a></li>
+                                <li><a href="{{ route('login') }}" class="transition-colors hover:text-white">Mulai Sekarang</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="mt-10 flex flex-col justify-between gap-2 border-t border-line-soft pt-6 text-xs text-muted sm:flex-row">
-                <p>&copy; {{ date('Y') }} Stockly. Semua hak dilindungi.</p>
-                <p>Dibuat dengan Laravel.</p>
+            <div class="flex flex-col items-center justify-between gap-6 border-t border-white/10 pt-6 md:flex-row md:gap-4">
+                <p class="text-[10px] uppercase tracking-widest opacity-50">&copy; {{ date('Y') }} Stockly — Dibuat dengan Laravel</p>
+                <div class="flex items-center gap-4">
+                    <span class="text-[10px] uppercase tracking-widest opacity-50">Ikuti Kami:</span>
+                    <div class="flex items-center gap-3">
+                        @foreach(['M9 18V6l10-2v11M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm10-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z', 'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z', 'M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z'] as $d)
+                            <a href="#" class="opacity-70 transition-colors hover:text-white hover:opacity-100">
+                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="{{ $d }}"/></svg>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
+
+    {{-- HLS video init --}}
+    <script>
+        (function () {
+            const video = document.getElementById('hero-video');
+            if (!video) return;
+            const src = "https://stream.mux.com/T6oQJQ02cQ6N01TR6iHwZkKFkbepS34dkkIc9iukgy400g.m3u8";
+
+            // Fade video in once it actually starts playing
+            const fadeIn = function () {
+                video.classList.remove('opacity-0');
+                video.classList.add('opacity-60');
+            };
+            video.addEventListener('playing', fadeIn, { once: true });
+            // Fallback: if already playing (cached), fade in immediately
+            if (!video.paused && video.readyState >= 3) fadeIn();
+
+            if (window.Hls && window.Hls.isSupported()) {
+                const hls = new window.Hls({ maxBufferLength: 10 });
+                hls.loadSource(src);
+                hls.attachMedia(video);
+                hls.on(window.Hls.Events.MANIFEST_PARSED, function () {
+                    video.play().catch(function () {});
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = src;
+                video.addEventListener('loadedmetadata', function () {
+                    video.play().catch(function () {});
+                });
+            }
+        })();
+    </script>
 
 </body>
 </html>

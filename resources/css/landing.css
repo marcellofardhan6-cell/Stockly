@@ -1,0 +1,317 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&display=swap');
+
+html,
+body {
+    font-family: 'Instrument Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.font-serif {
+    font-family: 'Instrument Serif', ui-serif, Georgia, serif;
+}
+
+.landing-base {
+    background-color: #000000;
+    color: #fff;
+}
+
+.landing-base ::selection {
+    background: rgb(48 84 255 / 0.35);
+}
+
+/* ============================================================
+   VIDEO BACKGROUND — immersive, slow Ken Burns zoom
+   ============================================================ */
+.video-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    animation: video-zoom 40s ease-in-out infinite alternate;
+}
+
+@keyframes video-zoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.12); }
+}
+
+/* ============================================================
+   AURORA BLOBS — animated gradient (on top of video overlay)
+   ============================================================ */
+.aurora {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(90px);
+    opacity: 0.5;
+    will-change: transform;
+}
+
+.aurora-1 {
+    width: 44rem; height: 44rem; top: -18rem; left: -10rem;
+    background: radial-gradient(circle, #3054ff 0%, transparent 65%);
+    animation: aurora-drift-1 22s ease-in-out infinite alternate;
+}
+
+.aurora-2 {
+    width: 40rem; height: 40rem; top: -12rem; right: -12rem;
+    background: radial-gradient(circle, #0b3f7a 0%, transparent 65%);
+    animation: aurora-drift-2 26s ease-in-out infinite alternate;
+}
+
+.aurora-3 {
+    width: 36rem; height: 36rem; bottom: -16rem; left: 30%;
+    background: radial-gradient(circle, #b4c0ff 0%, transparent 68%);
+    opacity: 0.26;
+    animation: aurora-drift-3 30s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-drift-1 { from { transform: translate(0,0) scale(1); } to { transform: translate(9rem,6rem) scale(1.15); } }
+@keyframes aurora-drift-2 { from { transform: translate(0,0) scale(1.1); } to { transform: translate(-8rem,7rem) scale(0.95); } }
+@keyframes aurora-drift-3 { from { transform: translate(0,0) scale(1); } to { transform: translate(-6rem,-5rem) scale(1.2); } }
+
+.bg-grid {
+    background-image:
+        linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 35%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 35%, transparent 75%);
+}
+
+/* ============================================================
+   SHINY GRADIENT TEXT
+   ============================================================ */
+.gradient-shiny {
+    background-image: linear-gradient(to right, #0a0a1a 0%, #152a86 12.5%, #b4c0ff 32.5%, #3054ff 50%, #152a86 67.5%, #0a0a1a 87.5%, #0a0a1a 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+.animate-shiny { animation: shiny 6s linear infinite; }
+@keyframes shiny { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+
+.text-gradient {
+    background: linear-gradient(120deg, #ffffff 20%, #b4c0ff 55%, #3054ff 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ============================================================
+   LIQUID GLASS (exact spec)
+   ============================================================ */
+.liquid-glass {
+    background: rgba(255, 255, 255, 0.01);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: none;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(180deg,
+        rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%,
+        rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%,
+        rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+/* ============================================================
+   ENTRANCE ANIMATIONS — dramatic, obvious
+   ============================================================ */
+@keyframes rise-in {
+    from { opacity: 0; transform: translateY(48px); filter: blur(8px); }
+    to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+@keyframes pop-in {
+    from { opacity: 0; transform: translateY(30px) scale(0.92); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes slide-in-left {
+    from { opacity: 0; transform: translateX(-56px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-in-right {
+    from { opacity: 0; transform: translateX(56px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.anim-rise { animation: rise-in 1s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-pop { animation: pop-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-slide-left { animation: slide-in-left 1s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-slide-right { animation: slide-in-right 1s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-fade { animation: fade-in 1.2s ease-out both; }
+
+/* Scroll-triggered reveal (JS adds .is-in) */
+.landing-reveal {
+    opacity: 0;
+    transform: translateY(56px);
+    filter: blur(8px);
+    transition:
+        opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 1s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 1s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--rd, 0ms);
+    will-change: opacity, transform, filter;
+}
+
+.landing-reveal.from-top { transform: translateY(-48px); }
+.landing-reveal.from-left { transform: translateX(-64px); filter: blur(0); }
+.landing-reveal.from-right { transform: translateX(64px); filter: blur(0); }
+.landing-reveal.scale-in { transform: translateY(56px) scale(0.9); }
+
+.landing-reveal.is-in {
+    opacity: 1;
+    transform: translateY(0) translateX(0) scale(1);
+    filter: blur(0);
+}
+
+/* Stagger grid */
+.stagger-grid > * {
+    opacity: 0;
+    transform: translateY(48px) scale(0.94);
+    transition:
+        opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--si, 0) * 110ms);
+}
+
+.stagger-grid.is-in > * {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* ============================================================
+   MARQUEE
+   ============================================================ */
+.marquee {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+.marquee-track {
+    display: flex;
+    width: max-content;
+    gap: 3.5rem;
+    animation: marquee-scroll 30s linear infinite;
+}
+
+.marquee:hover .marquee-track { animation-play-state: paused; }
+@keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ============================================================
+   3D TILT + GLOW
+   ============================================================ */
+.tilt {
+    transform-style: preserve-3d;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+    will-change: transform;
+}
+
+.tilt-inner { transform: translateZ(30px); }
+
+.card-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    background: radial-gradient(320px circle at var(--gx, 50%) var(--gy, 50%), rgb(48 84 255 / 0.16), transparent 65%);
+}
+
+.tilt:hover .card-glow,
+.glow-hover:hover .card-glow { opacity: 1; }
+
+/* ============================================================
+   MAGNETIC + CTA GLOW
+   ============================================================ */
+.magnetic {
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease, box-shadow 0.3s ease;
+    will-change: transform;
+}
+
+.cta-glow { box-shadow: 0 0 0 0 rgb(48 84 255 / 0); transition: box-shadow 0.35s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease; }
+.cta-glow:hover { box-shadow: 0 8px 40px -6px rgb(48 84 255 / 0.5), 0 0 24px rgb(48 84 255 / 0.25); }
+
+/* ============================================================
+   CURSOR GLOW
+   ============================================================ */
+.cursor-glow {
+    position: fixed;
+    top: 0; left: 0;
+    width: 34rem; height: 34rem;
+    border-radius: 9999px;
+    pointer-events: none;
+    z-index: 1;
+    background: radial-gradient(circle, rgb(48 84 255 / 0.08) 0%, transparent 60%);
+    transform: translate(-50%, -50%);
+    transition: opacity 0.4s ease;
+    opacity: 0;
+}
+
+/* ============================================================
+   FLOAT + PARALLAX + PULSE
+   ============================================================ */
+.float-slow { animation: float-y 7s ease-in-out infinite; }
+.float-slower { animation: float-y 10s ease-in-out infinite; }
+@keyframes float-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+
+.parallax { will-change: transform; }
+
+.pulse-dot { position: relative; }
+.pulse-dot::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 9999px;
+    border: 1.5px solid currentColor;
+    opacity: 0.6;
+    animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes pulse-ring { 0% { transform: scale(0.7); opacity: 0.7; } 100% { transform: scale(1.8); opacity: 0; } }
+
+/* ============================================================
+   NAVBAR — solid on scroll (JS toggles .nav-scrolled)
+   ============================================================ */
+.nav-glass {
+    transition: background-color 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+}
+
+.nav-scrolled {
+    background-color: rgb(5 7 12 / 0.85) !important;
+    border-color: rgb(255 255 255 / 0.1) !important;
+    box-shadow: 0 8px 32px rgb(0 0 0 / 0.4);
+}
+
+/* ============================================================
+    REDUCED MOTION — dibiarkan aktif sesuai preferensi eksplisit pemilik
+    (animasi landing selalu dimainkan)
+   ============================================================ */
