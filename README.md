@@ -27,6 +27,8 @@ Aplikasi ini bersifat *internal* — akun dibuat oleh Admin, bukan lewat registr
 
 ---
 <img width="959" height="539" alt="image" src="https://github.com/user-attachments/assets/49c3f480-2148-4603-a1c9-b0633ca77022" />
+<img width="959" height="539" alt="image" src="https://github.com/user-attachments/assets/c745b16c-3a74-4aa6-ad19-337cd99c6362" />
+
 
 ## 🚀 Fitur
 
